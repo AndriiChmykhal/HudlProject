@@ -20,6 +20,7 @@ class HomePage:
     close_icon_tool_tip = (By.CLASS_NAME, "u-onboarding-custom__dismiss")
     user_logged_in_drop_down = (By.CLASS_NAME, "hui-globaluseritem__display-name")
 
+
     def accept_cookies_if_present(self):
         try:
             self.wait.until(ec.element_to_be_clickable(self.accept_all_cookies)).click()
@@ -48,7 +49,8 @@ class HomePage:
     def verify_user_dropdown_present(self):
         assert self.wait.until(ec.presence_of_element_located(self.user_logged_in_drop_down))
 
-    def click_on_logged_in_user_dropdown(self):
-        """Hovers over the user dropdown menu to make it visible."""
-        dropdown = self.wait.until(ec.presence_of_element_located(self.user_logged_in_drop_down))
-        self.actions.move_to_element(dropdown).click()
+
+
+    # def click_on_logged_in_user_dropdown(self):
+        # dropdown = self.wait.until(ec.presence_of_element_located(self.user_logged_in_drop_down))
+        # self.actions.move_to_element(dropdown).click()
