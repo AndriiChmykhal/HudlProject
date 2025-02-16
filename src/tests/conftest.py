@@ -1,6 +1,7 @@
 import pytest
 from selenium import webdriver
 
+
 def pytest_addoption(parser):
     """Registers the --browser option with pytest"""
     parser.addoption(
@@ -9,6 +10,7 @@ def pytest_addoption(parser):
         default="chrome",
         help="Browser to run tests on: chrome or safari"
     )
+
 
 @pytest.fixture
 def driver(request):

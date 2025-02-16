@@ -8,6 +8,4 @@ valid_password = "g%PY2%c*g#ZF_GY"
 wrong_email = "test+123@test.com"
 wrong_password = "Qwert123!"
 
-
 screen_resolution = {"width": 1920, "height": 1080}
-

@@ -3,6 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.keys import Keys
 
+
 class LoginPage:
     def __init__(self, driver):
         self.driver = driver
@@ -22,7 +23,7 @@ class LoginPage:
     hudl_logo = (By.ID, "custom-prompt-logo")
     login_title = (By.XPATH, "//h1[text()='Log In']")
     continue_with_google = (By.CSS_SELECTOR, "button[data-provider='google']")
-    continue_with_google = (By.CSS_SELECTOR, "button[data-provider='facebook']")
+    continue_with_facebook = (By.CSS_SELECTOR, "button[data-provider='facebook']")
 
     def enter_email(self, email):
         self.wait.until(ec.visibility_of_element_located(self.email_input)).send_keys(email)
@@ -69,6 +70,3 @@ class LoginPage:
     def verify_email_input_filed_present(self):
         assert self.wait.until(
             ec.presence_of_element_located(self.email_input)), "Email input field is absent"
-
-
-

@@ -1,7 +1,9 @@
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.common.action_chains import ActionChains  # ✅ Import ActionChains
+from selenium.webdriver.common.action_chains import ActionChains
+
 
 class HomePage:
     def __init__(self, driver):
@@ -21,13 +23,13 @@ class HomePage:
     def accept_cookies_if_present(self):
         try:
             self.wait.until(ec.element_to_be_clickable(self.accept_all_cookies)).click()
-        except:
+        except TimeoutException:
             pass
 
     def reject_cookies_if_present(self):
         try:
             self.wait.until(ec.element_to_be_clickable(self.reject_cookies)).click()
-        except:
+        except TimeoutException:
             pass
 
     def click_login_dropdown(self):
