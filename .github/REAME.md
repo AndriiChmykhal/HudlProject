@@ -39,7 +39,7 @@ pytest src/tests/test_login.py::test_login_with_valid_credentials --browser=chro
 
 ### Reporting
 
-- **Pytest HTML Report**:
+**Pytest HTML Report**:
   ```sh
   pytest src/tests/ --browser=chrome --html=report.html
 
