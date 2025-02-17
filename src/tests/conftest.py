@@ -1,20 +1,18 @@
 import pytest
 from selenium import webdriver
 
-
 def pytest_addoption(parser):
-    """Registers the --browser option with pytest"""
     parser.addoption(
         "--browser",
         action="store",
         default="chrome",
-        help="Browser to run tests on: chrome or safari"
+        choices=["chrome", "safari"],
+        help="Browser to use for tests",
     )
 
-
-@pytest.fixture
+@pytest.fixture(scope="function", params=["chrome", "safari"])
 def driver(request):
-    browser = request.config.getoption("--browser").lower()
+    browser = request.param
 
     match browser:
         case "chrome":
@@ -22,8 +20,10 @@ def driver(request):
         case "safari":
             driver = webdriver.Safari()
         case _:
-            raise ValueError(f"Unsupported browser: {browser}. Use 'chrome' or 'safari'.")
+            raise ValueError(f"Unsupported browser: {browser}")
 
     driver.maximize_window()
+
     yield driver
+
     driver.quit()

@@ -3,6 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.action_chains import ActionChains
+import time
+
 
 
 class HomePage:
@@ -20,18 +22,21 @@ class HomePage:
     close_icon_tool_tip = (By.CLASS_NAME, "u-onboarding-custom__dismiss")
     user_logged_in_drop_down = (By.CLASS_NAME, "hui-globaluseritem__display-name")
 
-
     def accept_cookies_if_present(self):
         try:
-            self.wait.until(ec.element_to_be_clickable(self.accept_all_cookies)).click()
+            wait = WebDriverWait(self.driver, 5)
+            accept_cookie_button = wait.until(ec.element_to_be_clickable(self.accept_all_cookies))
+            accept_cookie_button.click()
         except TimeoutException:
-            pass
+            print("Cookies accept button not found or not clickable.")
 
     def reject_cookies_if_present(self):
         try:
-            self.wait.until(ec.element_to_be_clickable(self.reject_cookies)).click()
+            wait = WebDriverWait(self.driver, 5)
+            reject_cookie_button = wait.until(ec.element_to_be_clickable(self.reject_cookies))
+            reject_cookie_button.click()
         except TimeoutException:
-            pass
+            print("Reject accept button not found or not clickable.")
 
     def click_login_dropdown(self):
         self.wait.until(ec.element_to_be_clickable(self.login_dropdown)).click()
@@ -48,9 +53,3 @@ class HomePage:
 
     def verify_user_dropdown_present(self):
         assert self.wait.until(ec.presence_of_element_located(self.user_logged_in_drop_down))
-
-
-
-    # def click_on_logged_in_user_dropdown(self):
-        # dropdown = self.wait.until(ec.presence_of_element_located(self.user_logged_in_drop_down))
-        # self.actions.move_to_element(dropdown).click()

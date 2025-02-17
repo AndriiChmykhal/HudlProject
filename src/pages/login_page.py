@@ -1,3 +1,4 @@
+import re
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
@@ -16,7 +17,8 @@ class LoginPage:
     email_input = (By.NAME, "username")
     password_input = (By.ID, "password")
     continue_button = (By.CSS_SELECTOR, "button[type='submit']")
-    error_message = (By.CLASS_NAME, "ulp-input-error-message")
+    wrong_credentials_error_message = (By.CLASS_NAME, "ulp-input-error-message")
+    invalid_email_error_message = (By.ID, "error-element-username")
     error_icon = (By.CLASS_NAME, "ulp-input-error-icon")
     edit_email = (By.CSS_SELECTOR, "a[data-link-name='edit-username']")
     show_password = (By.CSS_SELECTOR, "button[data-action='toggle']")
@@ -33,9 +35,6 @@ class LoginPage:
     terms_of_service_link_locator = (By.XPATH, "//footer//a[contains(text(), 'Terms of Service')]")
     footer_full_text_locator = (By.XPATH, "//footer")
 
-    privacy_policy_link_locator = (By.XPATH, "//footer//a[contains(text(), 'Privacy Policy')]")
-    terms_of_service_link_locator = (By.XPATH, "//footer//a[contains(text(), 'Terms of Service')]")
-
     def enter_email(self, email):
         self.wait.until(ec.visibility_of_element_located(self.email_input)).send_keys(email)
 
@@ -45,8 +44,23 @@ class LoginPage:
     def tap_continue_button(self):
         self.wait.until(ec.element_to_be_clickable(self.continue_button)).click()
 
-    def verify_error_message_present(self):
-        assert self.wait.until(ec.presence_of_element_located(self.error_message))
+    def verify_incorrect_username_or_password_message_present(self):
+        error_element = self.wait.until(ec.presence_of_element_located(self.wrong_credentials_error_message))
+        actual_message = error_element.text.strip()
+        expected_message = "Incorrect username or password."
+        assert actual_message == expected_message, f"Expected: '{expected_message}', but got: '{actual_message}'"
+
+    def verify_incorrect_credentials_message_present(self):
+        error_element = self.wait.until(ec.presence_of_element_located(self.wrong_credentials_error_message))
+        actual_message = error_element.text.strip()
+        expected_message = "Your email or password is incorrect. Try again."
+        assert actual_message == expected_message, f"Expected: '{expected_message}', but got: '{actual_message}'"
+
+    def verify_invalid_email_message_present(self):
+        error_element = self.wait.until(ec.presence_of_element_located(self.invalid_email_error_message))
+        actual_message = error_element.text.strip()
+        expected_message = "Enter a valid email."
+        assert actual_message == expected_message, f"Expected: '{expected_message}', but got: '{actual_message}'"
 
     def verify_error_icon_present(self):
         assert self.wait.until(ec.presence_of_element_located(self.error_icon))
@@ -94,9 +108,8 @@ class LoginPage:
 
     def verify_footer_text(self):
         footer_element = self.wait.until(ec.presence_of_element_located(self.footer_full_text_locator))
-        footer_text = footer_element.text.strip()
+        footer_text = re.sub(r'\s+', ' ', footer_element.text).strip()
         expected_text = "By continuing, you agree to our Privacy Policy and Terms of Service"
-
         assert footer_text == expected_text, f"Footer text is incorrect! Found: '{footer_text}'"
 
     def verify_privacy_policy_link(self):
