@@ -11,7 +11,7 @@ class HomePage:
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(driver, 5)
-        self.actions = ActionChains(driver)  # ✅ Initialize ActionChains
+        self.actions = ActionChains(driver)
 
     accept_all_cookies = (By.ID, "onetrust-accept-btn-handler")
     reject_cookies = (By.ID, "onetrust-reject-all-handler")
