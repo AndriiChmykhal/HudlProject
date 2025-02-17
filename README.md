@@ -16,6 +16,9 @@ Hudl Web Automation is a test automation project built using **Python** and **Se
   pip install selenium
   ```
 - Install `psutil`
+  ```sh
+  pip install psutil
+  ```
 - Update `valid_email` and `valid_password` in `.env`
 
 ### Supported Browsers
