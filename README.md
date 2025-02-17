@@ -12,7 +12,7 @@
 
 ### Configuration
 - **Valid credentials**: Before running authentication tests, ensure you update `valid_email` and `valid_password` in `.env`.
-- **Test markers**: Use `@pytest.mark.smoke`, `@pytest.mark.regression`, `@pytest.mark.p0`, `@pytest.mark.p1`, etc., to categorize their association with test suites
+- **Test markers**: Use `@pytest.mark.smoke`, `@pytest.mark.regression`, `@pytest.mark.p0`, `@pytest.mark.p1`, etc., to categorize test case priorities and their association with  test suites
 
 ### Running Tests
 
