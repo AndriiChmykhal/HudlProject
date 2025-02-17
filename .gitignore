@@ -2,3 +2,6 @@ venv/
 *.pyc
 __pycache__/
 .idea
+.DS_Store
+assets/style.css
+src/.DS_Store
