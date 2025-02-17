@@ -1,5 +1,8 @@
 # Hudl Web Automation
 
+## Overview
+Hudl Web Automation is a test automation project built using **Python** and **Selenium WebDriver**.
+
 ## Quick Start
 
 ### Setup
@@ -8,8 +11,12 @@
 - Install Python 3.10 or later
 - Install Google Chrome and Safari browsers
 - Install `pip` and `virtualenv`
+- - Install Selenium:
+  ```sh
+  pip install selenium
+  ```
 - Install `psutil`
-- Create a `.env` file in the root of the project
+- Update `valid_email` and `valid_password` in `.env`
 
 ### Supported Browsers
 - **Google Chrome**
@@ -23,7 +30,6 @@ Enable remote automation in Safari:
 3. Restart Safari before running tests
 
 ### Configuration
-- **Valid credentials**: Before running authentication tests, ensure you update `valid_email` and `valid_password` in `.env`
 - **Test markers**: Use `@pytest.mark.smoke`, `@pytest.mark.regression`, `@pytest.mark.p0`, `@pytest.mark.p1`, etc., to categorize test case priorities and their association with  test suites
 
 ### Running Tests
