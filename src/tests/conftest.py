@@ -1,8 +1,10 @@
 import pytest
 from selenium import webdriver
 
+
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome", help="Browser to use for tests")
+
 
 @pytest.fixture(scope="function")
 def driver(request):
