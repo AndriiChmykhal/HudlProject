@@ -4,12 +4,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.keys import Keys
 from utils.config import terms_of_service_url, privacy_policy_url
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class LoginPage:
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(driver, 5)
+        self.actions = ActionChains(driver)
 
     accept_cookies = (By.ID, "onetrust-accept-btn-handler")
     login_dropdown = (By.CSS_SELECTOR, "[data-qa-id='login-select']")
@@ -37,36 +39,44 @@ class LoginPage:
 
     def enter_email(self, email):
         self.wait.until(ec.visibility_of_element_located(self.email_input)).send_keys(email)
+        return self
 
     def enter_password(self, password):
         self.wait.until(ec.visibility_of_element_located(self.password_input)).send_keys(password)
+        return self
 
     def tap_continue_button(self):
         self.wait.until(ec.element_to_be_clickable(self.continue_button)).click()
+        return self
 
     def verify_incorrect_username_or_password_message_present(self):
         error_element = self.wait.until(ec.presence_of_element_located(self.wrong_credentials_error_message))
         actual_message = error_element.text.strip()
         expected_message = "Incorrect username or password."
         assert actual_message == expected_message, f"Expected: '{expected_message}', but got: '{actual_message}'"
+        return self
 
     def verify_incorrect_credentials_message_present(self):
         error_element = self.wait.until(ec.presence_of_element_located(self.wrong_credentials_error_message))
         actual_message = error_element.text.strip()
         expected_message = "Your email or password is incorrect. Try again."
         assert actual_message == expected_message, f"Expected: '{expected_message}', but got: '{actual_message}'"
+        return self
 
     def verify_invalid_email_message_present(self):
         error_element = self.wait.until(ec.presence_of_element_located(self.invalid_email_error_message))
         actual_message = error_element.text.strip()
         expected_message = "Enter a valid email."
         assert actual_message == expected_message, f"Expected: '{expected_message}', but got: '{actual_message}'"
+        return self
 
     def verify_error_icon_present(self):
         assert self.wait.until(ec.presence_of_element_located(self.error_icon))
+        return self
 
     def click_edit_email(self):
         self.wait.until(ec.element_to_be_clickable(self.edit_email)).click()
+        return self
 
     def clear_and_enter_email(self, new_email):
         self.click_edit_email()
@@ -75,50 +85,62 @@ class LoginPage:
         email_field.send_keys(Keys.COMMAND + "a")  # for Mac
         email_field.send_keys(Keys.DELETE)
         email_field.send_keys(new_email)
+        return self
 
     def verify_email_placeholder_present(self):
         assert self.wait.until(
             ec.presence_of_element_located(self.email_placeholder)), "Email* placeholder is absent in input field"
+        return self
 
     def verify_hudl_logo_present(self):
         assert self.wait.until(
             ec.presence_of_element_located(self.hudl_logo)), "Hudl logo is absent"
+        return self
 
-    def verify_email_input_filed_present(self):
+    def verify_email_input_field_present(self):
         assert self.wait.until(
             ec.presence_of_element_located(self.email_input)), "Email input field is absent"
+        return self
 
     def verify_continue_with_google_present(self):
         assert self.wait.until(
             ec.presence_of_element_located(self.continue_with_google)), "Continue with Google button is absent"
+        return self
 
     def verify_continue_with_facebook_present(self):
         assert self.wait.until(
             ec.presence_of_element_located(self.continue_with_google)), "Continue with Facebook button is absent"
+        return self
 
     def verify_continue_with_apple_present(self):
         assert self.wait.until(
             ec.presence_of_element_located(self.continue_with_apple)), "Continue with Apple button is absent"
+        return self
 
     def verify_dont_have_account_text_present(self):
         assert self.wait.until(ec.presence_of_element_located(self.dont_have_account_text))
+        return self
 
-    def create_account_link_present(self):
+    def verify_create_account_link_present(self):
         assert self.wait.until(ec.presence_of_element_located(self.create_account_link))
+        return self
 
     def verify_footer_text(self):
         footer_element = self.wait.until(ec.presence_of_element_located(self.footer_full_text_locator))
         footer_text = re.sub(r'\s+', ' ', footer_element.text).strip()
         expected_text = "By continuing, you agree to our Privacy Policy and Terms of Service"
         assert footer_text == expected_text, f"Footer text is incorrect! Found: '{footer_text}'"
+        return self
 
     def verify_privacy_policy_link(self):
         privacy_link = self.wait.until(ec.presence_of_element_located(self.privacy_policy_link_locator))
         assert privacy_link.text == "Privacy Policy", "Privacy Policy text is incorrect!"
         assert privacy_link.get_attribute(
             "href") == privacy_policy_url, "Privacy Policy link is incorrect!"
+        return self
 
     def verify_terms_of_service_link(self):
         terms_link = self.wait.until(ec.presence_of_element_located(self.terms_of_service_link_locator))
         assert terms_link.text == "Terms of Service", "Terms of Service text is incorrect!"
         assert terms_link.get_attribute("href") == terms_of_service_url, "Terms of Service link is incorrect!"
+        return self

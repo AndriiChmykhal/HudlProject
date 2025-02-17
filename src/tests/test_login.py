@@ -10,17 +10,26 @@ from utils.config import base_url, valid_email, valid_password, wrong_email, wro
 def test_login_with_valid_credentials(driver):
     home_page = HomePage(driver)
     login_page = LoginPage(driver)
-
     driver.get(base_url)
-    home_page.accept_cookies_if_present()
-    home_page.click_login_dropdown()
-    home_page.click_login_hudl()
-    login_page.enter_email(valid_email)
-    login_page.tap_continue_button()
-    login_page.enter_password(valid_password)
-    login_page.tap_continue_button()
-    home_page.close_tooltip_if_present()
-    home_page.verify_user_dropdown_present()
+
+    (
+        home_page
+        .accept_cookies_if_present()
+        .click_login_dropdown()
+        .click_login_hudl()
+    )
+    (
+        login_page
+        .enter_email(valid_email)
+        .tap_continue_button()
+        .enter_password(valid_password)
+        .tap_continue_button()
+    )
+    (
+        home_page
+        .close_tooltip_if_present()
+        .verify_user_dropdown_present()
+    )
 
 
 @pytest.mark.p0
@@ -28,21 +37,30 @@ def test_login_with_valid_credentials(driver):
 def test_edit_wrong_password_to_correct_one_and_login(driver):
     home_page = HomePage(driver)
     login_page = LoginPage(driver)
-
     driver.get(base_url)
-    home_page.accept_cookies_if_present()
-    home_page.click_login_dropdown()
-    home_page.click_login_hudl()
-    login_page.enter_email(valid_email)
-    login_page.tap_continue_button()
-    login_page.enter_password(wrong_password)
-    login_page.tap_continue_button()
-    login_page.verify_incorrect_credentials_message_present()
-    login_page.verify_error_icon_present()
-    login_page.enter_password(valid_password)
-    login_page.tap_continue_button()
-    home_page.close_tooltip_if_present()
-    home_page.verify_user_dropdown_present()
+
+    (
+        home_page
+        .accept_cookies_if_present()
+        .click_login_dropdown()
+        .click_login_hudl()
+    )
+    (
+        login_page
+        .enter_email(valid_email)
+        .tap_continue_button()
+        .enter_password(wrong_password)
+        .tap_continue_button()
+        .verify_incorrect_credentials_message_present()
+        .verify_error_icon_present()
+        .enter_password(valid_password)
+        .tap_continue_button()
+    )
+    (
+        home_page
+        .close_tooltip_if_present()
+        .verify_user_dropdown_present()
+    )
 
 
 @pytest.mark.p1
@@ -50,21 +68,27 @@ def test_edit_wrong_password_to_correct_one_and_login(driver):
 def test_login_page_elements_present(driver):
     home_page = HomePage(driver)
     login_page = LoginPage(driver)
-
     driver.get(base_url)
-    home_page.reject_cookies_if_present()
-    home_page.click_login_dropdown()
-    home_page.click_login_hudl()
-    login_page.verify_hudl_logo_present()
-    login_page.verify_email_input_filed_present()
-    login_page.verify_email_placeholder_present()
-    login_page.verify_continue_with_google_present()
-    login_page.verify_continue_with_facebook_present()
-    login_page.verify_dont_have_account_text_present()
-    login_page.create_account_link_present()
-    login_page.verify_footer_text()
-    login_page.verify_privacy_policy_link()
-    login_page.verify_terms_of_service_link()
+
+    (
+        home_page
+        .reject_cookies_if_present()
+        .click_login_dropdown()
+        .click_login_hudl()
+    )
+    (
+        login_page
+        .verify_hudl_logo_present()
+        .verify_email_input_field_present()
+        .verify_email_placeholder_present()
+        .verify_continue_with_google_present()
+        .verify_continue_with_facebook_present()
+        .verify_dont_have_account_text_present()
+        .verify_create_account_link_present()
+        .verify_footer_text()
+        .verify_privacy_policy_link()
+        .verify_terms_of_service_link()
+    )
 
 
 @pytest.mark.p2
@@ -72,23 +96,32 @@ def test_login_page_elements_present(driver):
 def test_edit_wrong_email_and_password_to_valid_and_login(driver):
     home_page = HomePage(driver)
     login_page = LoginPage(driver)
-
     driver.get(base_url)
-    home_page.accept_cookies_if_present()
-    home_page.click_login_dropdown()
-    home_page.click_login_hudl()
-    login_page.enter_email(wrong_email)
-    login_page.tap_continue_button()
-    login_page.enter_password(wrong_password)
-    login_page.tap_continue_button()
-    login_page.verify_incorrect_username_or_password_message_present()
-    login_page.verify_error_icon_present()
-    login_page.clear_and_enter_email(valid_email)
-    login_page.tap_continue_button()
-    login_page.enter_password(valid_password)
-    login_page.tap_continue_button()
-    home_page.close_tooltip_if_present()
-    home_page.verify_user_dropdown_present()
+
+    (
+        home_page
+        .accept_cookies_if_present()
+        .click_login_dropdown()
+        .click_login_hudl()
+    )
+    (
+        login_page
+        .enter_email(wrong_email)
+        .tap_continue_button()
+        .enter_password(wrong_password)
+        .tap_continue_button()
+        .verify_incorrect_username_or_password_message_present()
+        .verify_error_icon_present()
+        .clear_and_enter_email(valid_email)
+        .tap_continue_button()
+        .enter_password(valid_password)
+        .tap_continue_button()
+    )
+    (
+        home_page
+        .close_tooltip_if_present()
+        .verify_user_dropdown_present()
+    )
 
 
 @pytest.mark.p3
@@ -96,11 +129,17 @@ def test_edit_wrong_email_and_password_to_valid_and_login(driver):
 def test_invalid_email_format_handling(driver):
     home_page = HomePage(driver)
     login_page = LoginPage(driver)
-
     driver.get(base_url)
-    home_page.click_login_dropdown()
-    home_page.click_login_hudl()
-    login_page.enter_email(invalid_email)
-    login_page.tap_continue_button()
-    login_page.verify_invalid_email_message_present()
-    login_page.verify_error_icon_present()
+
+    (
+        home_page
+        .click_login_dropdown()
+        .click_login_hudl()
+    )
+    (
+        login_page
+        .enter_email(invalid_email)
+        .tap_continue_button()
+        .verify_invalid_email_message_present()
+        .verify_error_icon_present()
+    )

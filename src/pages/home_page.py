@@ -28,6 +28,7 @@ class HomePage:
             accept_cookie_button.click()
         except TimeoutException:
             print("Cookies accept button not found or not clickable.")
+        return self
 
     def reject_cookies_if_present(self):
         try:
@@ -36,19 +37,24 @@ class HomePage:
             reject_cookie_button.click()
         except TimeoutException:
             print("Reject accept button not found or not clickable.")
+        return self
 
     def click_login_dropdown(self):
         self.wait.until(ec.element_to_be_clickable(self.login_dropdown)).click()
+        return self
 
     def click_login_hudl(self):
         self.wait.until(ec.element_to_be_clickable(self.login_hudl)).click()
+        return self
 
     def close_tooltip_if_present(self):
         try:
             self.wait.until(ec.presence_of_element_located(self.tool_tip))
             self.wait.until(ec.element_to_be_clickable(self.close_icon_tool_tip)).click()
-        except:
+        except TimeoutException:
             pass
+        return self
 
     def verify_user_dropdown_present(self):
         assert self.wait.until(ec.presence_of_element_located(self.user_logged_in_drop_down))
+        return self

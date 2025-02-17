@@ -8,11 +8,23 @@
 - Install Python 3.10 or later
 - Install Google Chrome and Safari browsers
 - Install `pip` and `virtualenv`
+- Install `psutil`
 - Create a `.env` file in the root of the project
+
+### Supported Browsers
+- **Google Chrome**
+- **Safari** (Must be run on macOS)
 
 ### Configuration
 - **Valid credentials**: Before running authentication tests, ensure you update `valid_email` and `valid_password` in `.env`.
 - **Test markers**: Use `@pytest.mark.smoke`, `@pytest.mark.regression`, `@pytest.mark.p0`, `@pytest.mark.p1`, etc., to categorize test case priorities and their association with  test suites
+
+#### **Safari Setup Requirement**
+Enable remote automation in Safari:
+1. Go to **Settings → Advanced** and enable **"Show Develop menu in menu bar"**
+2. Open **Develop menu** and enable **"Allow Remote Automation"**
+3. Restart Safari before running tests
+
 
 ### Running Tests
 
@@ -21,12 +33,12 @@
 pytest src/tests/ --browser=chrome
 ```
 
-#### Run tests on Safari
+#### Run tests on Safari (macOS only)
 ```sh
 pytest src/tests/ --browser=safari
 ```
 
-#### Run tests on both browsers
+#### Run tests on both browsers (macOS only)
 ```sh
 pytest src/tests/ --browser=chrome --browser=safari
 ```
