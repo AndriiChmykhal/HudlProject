@@ -11,7 +11,7 @@ Hudl Web Automation is a test automation project built using **Python** and **Se
 - Install Python 3.10 or later
 - Install Google Chrome and Safari browsers
 - Install `pip` and `virtualenv`
-- - Install Selenium:
+- Install Selenium:
   ```sh
   pip install selenium
   ```
