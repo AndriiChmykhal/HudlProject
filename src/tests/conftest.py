@@ -2,17 +2,11 @@ import pytest
 from selenium import webdriver
 
 def pytest_addoption(parser):
-    parser.addoption(
-        "--browser",
-        action="store",
-        default="chrome",
-        choices=["chrome", "safari"],
-        help="Browser to use for tests",
-    )
+    parser.addoption("--browser", action="store", default="chrome", help="Browser to use for tests")
 
-@pytest.fixture(scope="function", params=["chrome", "safari"])
+@pytest.fixture(scope="function")
 def driver(request):
-    browser = request.param
+    browser = request.config.getoption("--browser")
 
     match browser:
         case "chrome":
